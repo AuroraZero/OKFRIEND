@@ -89,5 +89,23 @@ while True: #main loop
 		Field5 = lightSensor.read()
 		channel.update({1:Field1,2:Field2,3:Field3,4:Field4,5:Field5}) #upload to thingspeak
 		time.sleep(1)
+		if(button.read() == 1):
+			index+=1
+		
+	LCDDisplay.LCDInstruction(0x01)
+	LCDPrint("TASTE THE")
+	LCDDisplay.LCDInstruction(0x80+0x28)
+	LCDPrint("RAINBOW")
+	while(index==7):
+		for i in range(0, 255):
+			LCDDisplay.LEDColor(i,0,255-i)
+			time.sleep(0.005)
+		for i in range(0, 255):
+			LCDDisplay.LEDColor(255-i,i,0)
+			time.sleep(0.005)
+		for i in range(0, 255):
+			LCDDisplay.LEDColor(0,255-i,i)
+			time.sleep(0.005)
+			
 		if(button.read() == 1):#reset to top of loop if button is depressed
 			index = 1
